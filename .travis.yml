@@ -1,0 +1,108 @@
+language: node_js
+sudo: required
+node_js:
+- '4.2'
+before_install:
+
+  # Global install some npm
+  - npm install -g grunt-cli
+
+  # Install the app deps
+  - cd "$TRAVIS_BUILD_DIR/app"
+  - npm install --production
+  - cd "$TRAVIS_BUILD_DIR"
+
+  # Install kalabox
+  - sudo apt-get -y update
+  - sudo apt-get -y install iptables cgroup-bin bridge-utils curl
+  - curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest-dev.deb"
+  - sudo dpkg -i /tmp/kalabox.deb
+
+before_script:
+
+  # Move our latest app code to teh sysconfroot
+  - mkdir -p "$HOME/.kalabox/plugins"
+  - cp -rfa "$TRAVIS_BUILD_DIR/." "$HOME/.kalabox/plugins/kalabox-app-php"
+
+  # Nice dev helpers to verify our env
+  - ./scripts/travis-env.sh
+
+  # Sanity checks
+  - node --version
+  - npm --version
+  - grunt --version
+  - kbox version
+  - kbox create || true
+
+script:
+
+  # Run code tests
+  - grunt test:code
+  # Ensure images
+  - grunt test:images
+  # Do the KALABOX_TEST_GROUP
+  - grunt test:$KALABOX_TEST_GROUP
+
+before_deploy:
+
+  # Assume this is a dev release unless TRAVIS_TAG is defined
+  - DEV=true
+  - if [ ! -z "$TRAVIS_TAG" ]; then DEV=false; fi
+
+  # Build the release
+  - mkdir -p release
+  - grunt pkg --dev=$DEV
+
+  # Name the release depending on whether it is an official release or not
+  - if [ -z "$TRAVIS_TAG" ]; then cp -rf dist/*.zip release/kalabox-app-php-latest.zip; fi
+  - if [ -z "$TRAVIS_TAG" ]; then cp -rf dist/*.tar.gz release/kalabox-app-php-latest.tar.gz; fi
+
+  # Official releases
+  - if [ ! -z "$TRAVIS_TAG" ]; then cp -rf dist/*.zip release/kalabox-app-php-$TRAVIS_TAG.zip; fi
+  - if [ ! -z "$TRAVIS_TAG" ]; then cp -rf dist/*.tar.gz release/kalabox-app-php-$TRAVIS_TAG.tar.gz; fi
+
+cache:
+  directories:
+  - node_modules
+notifications:
+  irc:
+  - chat.freenode.net#kalabox
+  email:
+    recipients:
+    - mike@kalabox.io
+    - alec@kalabox.io
+    on_success: always
+env:
+  global:
+    - secure: QQZ0ayL4Tedql8rpvGkGeyGQT8MFHkhzRYDqI8F5iFVU7RBZEBBeMKrDRb8IJNssOsIodq4KLedIW/FMcs6Uq1Xm8Vhi9TVNqIZMiCYGtU5ByFgoYRUBgInppiz/Km8YoMBXqjUpOqa05zA72J4I6UlAM0KgdDkC9cIkn1tBPj4=
+    - DOCKER_HOST: tcp://10.13.37.100:2375
+  matrix:
+    - KALABOX_TEST_GROUP=drupal7
+    - KALABOX_TEST_GROUP=drupal8
+    - KALABOX_TEST_GROUP=backdrop
+    - KALABOX_TEST_GROUP=wordpress
+    - KALABOX_TEST_GROUP=drush
+    - KALABOX_TEST_GROUP=backdrush
+deploy:
+  - provider: s3
+    access_key_id: AKIAJFNVIG2AAFVAN35A
+    secret_access_key:
+      secure: c+bYXpw36GEcR8EnCmq5KQcJYoTchJy5VL2L30rjYjpP/gDyAemAq3bGTEW/OfxMdTa36n5rzxclt2icW92P3bEZND6ZEUFTNg+2L6K/BlX1WZ6vJOFrPeYRuvuvsprOdJ2jJE6gPLr0hKzyQ35A7f5FPKV1vtXq0qPWDeCi1tI=
+    bucket: apps.kalabox.io
+    local-dir: release
+    acl: public_read
+    region: us-west-2
+    skip_cleanup: true
+    on:
+      repo: kalabox/kalabox-app-php
+      branch: v2.0
+  - provider: releases
+    api_key:
+      secure: goCp85FNFNRiLbYGlcxDXkmx7gUqTWzzMsvkeiFh/QnpDJJvQ86Ql1hKXPB+djHSEPLn7TOFth8Xg1HmvIidGgfvZKexMA8KGwI2sgYJm96DMDxmFkju+94THoXIESxpoBnb1K9I0zkP6GhB1OdNNky5ZTTYMizjB/f8795zRGU=
+    file:
+      - release/kalabox-app-php-$TRAVIS_TAG.tar.gz
+      - release/kalabox-app-php-$TRAVIS_TAG.zip
+    skip_cleanup: true
+    on:
+      repo: kalabox/kalabox-app-php
+      tags: true

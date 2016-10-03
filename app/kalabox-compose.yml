@@ -1,0 +1,108 @@
+#
+# Kalabox Drupal compose file
+#
+# This contains the core service definitions to run Drupal on Kalabox. This
+# is a docker-compose file so please check out the compose file documentation
+# over at https://docs.docker.com/compose/compose-file/.
+#
+# There are, however, a few caveats to take into account kalabox-compose.ymls
+#
+#   1. It is probably a bad idea to use the `container_name` key.
+#
+#   2. You can run `kbox env` inside of your app for a list of environmental
+#      variables that you can use inside of this compose file.
+#
+#   3. Ports need to be exposed to the host on the outside using
+#
+#      ports:
+#       - "PORTNUMBER"
+#
+#      Otherwise they are not usable in the services plugin.
+#
+#    4. The config directory in your app root contains a lot of
+#       service config that is shared into each service. This is all
+#       editable directly and should take on a `kbox restart`.
+#
+
+#
+# This defines a data container to share common drupal app assets such as:
+#
+#   1. /media - Static assets like images and compiled css, Your files/wp-uploads
+#               directory is symlinked here
+#
+#   3. /var/lib/mysql - MariaDB databases to preserve data on rebuilds
+#
+#   4. /var/www/html - Your applications codebase, also where you shared code lives
+#
+data:
+
+  # Comment this and uncomment 'build' below if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  image: busybox
+
+  # Uncomment this and comment 'image' above if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  #
+  # build: ./dockerfiles/data
+
+  volumes:
+    - /var/lib/mysql
+    - /var/www/html
+    - $KALABOX_APP_ROOT_BIND/files:/var/www/html/$KALABOX_APP_PHP_CONFIG_FILEMOUNT
+
+#
+# This defines a basic Drupal appserver.
+#
+# The $KALABOX_APP_DRUPAL_CONFIG_VERSION var should contain the
+# appropriate major version of drupal
+#
+#
+appserver:
+
+  # Comment this and uncomment 'build' below if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  image: $KALABOX_APP_PHP_CONFIG_IMAGE
+
+  # Uncomment this and comment 'image' above if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  #
+  # build: ./dockerfiles/${KALABOX_APP_PHP_CONFIG_FRAMEWORK}${KALABOX_APP_PHP_CONFIG_VERSION}
+
+  hostname: $KALABOX_APP_CONFIG_NAME.$KALABOX_APP_CONFIG_DOMAIN
+  volumes:
+    - $KALABOX_APP_ROOT_BIND/config/apache/apache2-foreground:/usr/local/bin/apache2-foreground
+  environment:
+    FRAMEWORK: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    KALABOX_UID: $KALABOX_ENGINE_ID
+    KALABOX_GID: $KALABOX_ENGINE_GID
+  volumes_from:
+    - data
+  links:
+    - db:database
+    - db:mysql
+  ports:
+    - "80"
+
+#
+# This defines a basic database server.
+#
+db:
+
+  # Comment this and uncomment 'build' below if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  image: mysql
+
+  # Uncomment this and comment 'image' above if you want to edit your
+  # local dockerfile and build from there. This is useful for development
+  #
+  # build: ./dockerfiles/db
+
+  volumes_from:
+    - data
+  ports:
+    - "3306"
+  environment:
+    MYSQL_USER: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    MYSQL_PASSWORD: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    MYSQL_DATABASE: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
