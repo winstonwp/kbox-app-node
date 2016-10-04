@@ -25,7 +25,7 @@ cli:
   volumes_from:
     - data
   environment:
-    WEBROOT: /var/www/html
+    WEBROOT: /home/app
     TERM: xterm-color
     KALABOX_UID: $KALABOX_ENGINE_ID
     KALABOX_GID: $KALABOX_ENGINE_GID
@@ -35,8 +35,9 @@ cli:
     #GIT_COMMITTER_NAME: $KALABOX_APP_PANTHEON_CONFIG_NAME
     #GIT_COMMITTER_EMAIL: $KALABOX_APP_PANTHEON_CONFIG_EMAIL
   links:
-    - db:database
+   - db:database
   working_dir: $KALABOX_CLI_WORKING_DIR
   stdin_open: true
   tty: true
 
+# checked

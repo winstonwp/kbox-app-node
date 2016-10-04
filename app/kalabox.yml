@@ -10,8 +10,8 @@
 # This is the name you choose during `kbox create drupal7/8`. Changing the
 # name or the type is generally dark and full of peril.
 #
-name: php
-type: php
+name: node
+type: node
 
 #
 # This is an array of the plugins that a Kalabox app implements. By default
@@ -39,7 +39,7 @@ type: php
 #     - my-wicked-awesome-plugin
 #
 plugins:
-  - kalabox-plugin-php
+  - kalabox-plugin-node
 
 
 #
@@ -88,7 +88,7 @@ pluginconfig:
   #     Generally you will not want to share massive amounts of static assets.
   #
   sharing:
-    share: data:/var/www/html
+    share: data:/home/app
 
   #
   # services plugin config.
@@ -112,8 +112,8 @@ pluginconfig:
         default: true
 
   #
-  # Php plugin config.
+  # Node plugin config.
   #
-  php:
-    framework: 'drupal'
-    version: '8'
+  node:
+    framework: 'node'
+    version: '4'

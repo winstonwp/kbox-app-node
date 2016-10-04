@@ -1,21 +1,18 @@
 {
-  "name": "kalabox-app-php",
-  "description": "A Kalabox app plugin to spin up php sites.",
+  "name": "kalabox-app-node",
+  "description": "A Kalabox app plugin to spin up node sites.",
   "keywords": [
     "docker",
     "kalabox",
-    "drupal",
-    "wordpress",
-    "php"
+    "node"
   ],
   "version": "2.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kalabox/kalabox-app-php.git"
+    "url": "https://github.com/winstonwp/kalabox-app-node.git"
   },
   "bugs": {
-    "url": "http://github.com/kalabox/kalabox-app-php",
-    "email": "mike@kalabox.io"
+    "url": "https://github.com/winstonwp/kalabox-app-node",
   },
   "dependencies": {
     "lodash": "^3.7.0"

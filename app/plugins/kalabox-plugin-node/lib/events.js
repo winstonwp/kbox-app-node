@@ -11,17 +11,17 @@ module.exports = function(kbox, app) {
   var _ = require('lodash');
 
   /*
-   * Add our drupal settings to the ENV and also
+   * Add our node settings to the ENV and also
    */
 
-  // Set our drupal stuff into the env
-  var identifier = 'app_php_config';
-  app.env.setEnvFromObj(app.config.pluginconfig.php, identifier);
+  // Set our node stuff into the env
+  var identifier = 'app_node_config';
+  app.env.setEnvFromObj(app.config.pluginconfig.node, identifier);
 
   /*
    * Get framework specific events if applicable
    */
-  var framework = app.config.pluginconfig.php.framework;
+  var framework = app.config.pluginconfig.node.framework;
   var frameworkEvents = path.join(__dirname, framework + '.js');
   if (fs.existsSync(frameworkEvents)) {
     require(frameworkEvents)(kbox, app);

@@ -23,10 +23,9 @@ module.exports = function(kbox) {
 
   // List of viable frameworks
   var frameworks = [
-    'backdrop',
-    'drupal7',
-    'drupal8',
-    'wordpress'
+    'node0',
+    'node4',
+    'node6'
   ];
 
   // Load our events and create modules

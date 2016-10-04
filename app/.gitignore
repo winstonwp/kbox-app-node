@@ -12,7 +12,6 @@ CVS
 node_modules
 *.tar
 *.id_rsa
-pantheon.aliases.drushrc.php
 build
 dist
 .sti*

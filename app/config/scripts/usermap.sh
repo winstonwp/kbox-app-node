@@ -15,3 +15,5 @@ adduser --force-badname --quiet --gecos "" --disabled-password --home $HOME --gi
 # Run the command
 echo "$KALABOX_UID ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 su -s "/bin/bash" -m -c "$(echo $@)" "$KALABOX_UID"
+
+#checked

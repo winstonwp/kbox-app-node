@@ -73,7 +73,7 @@ module.exports = function(kbox, app) {
       if (name === 'db') {
 
         // Get framework
-        var framework = app.config.pluginconfig.php.framework;
+        var framework = app.config.pluginconfig.node.framework;
         var host = [app.name, app.domain].join('.');
 
         // Get port from inspect data

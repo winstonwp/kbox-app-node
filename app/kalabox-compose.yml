@@ -32,7 +32,7 @@
 #
 #   3. /var/lib/mysql - MariaDB databases to preserve data on rebuilds
 #
-#   4. /var/www/html - Your applications codebase, also where you shared code lives
+#   4. /home/app - Your applications codebase, also where you shared code lives
 #
 data:
 
@@ -47,8 +47,8 @@ data:
 
   volumes:
     - /var/lib/mysql
-    - /var/www/html
-    - $KALABOX_APP_ROOT_BIND/files:/var/www/html/$KALABOX_APP_PHP_CONFIG_FILEMOUNT
+    - /home/app
+    - $KALABOX_APP_ROOT_BIND/files:/home/app/$KALABOX_APP_NODE_CONFIG_FILEMOUNT
 
 #
 # This defines a basic Drupal appserver.
@@ -61,18 +61,18 @@ appserver:
 
   # Comment this and uncomment 'build' below if you want to edit your
   # local dockerfile and build from there. This is useful for development
-  image: $KALABOX_APP_PHP_CONFIG_IMAGE
+  image: $KALABOX_APP_NODE_CONFIG_IMAGE
 
   # Uncomment this and comment 'image' above if you want to edit your
   # local dockerfile and build from there. This is useful for development
   #
-  # build: ./dockerfiles/${KALABOX_APP_PHP_CONFIG_FRAMEWORK}${KALABOX_APP_PHP_CONFIG_VERSION}
+  # build: ./dockerfiles/${KALABOX_APP_NODE_CONFIG_FRAMEWORK}${KALABOX_APP_NODE_CONFIG_VERSION}
 
   hostname: $KALABOX_APP_CONFIG_NAME.$KALABOX_APP_CONFIG_DOMAIN
   volumes:
     - $KALABOX_APP_ROOT_BIND/config/apache/apache2-foreground:/usr/local/bin/apache2-foreground
   environment:
-    FRAMEWORK: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    FRAMEWORK: $KALABOX_APP_NODE_CONFIG_FRAMEWORK
     KALABOX_UID: $KALABOX_ENGINE_ID
     KALABOX_GID: $KALABOX_ENGINE_GID
   volumes_from:
@@ -102,7 +102,7 @@ db:
   ports:
     - "3306"
   environment:
-    MYSQL_USER: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
-    MYSQL_PASSWORD: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    MYSQL_USER: $KALABOX_APP_NODE_CONFIG_FRAMEWORK
+    MYSQL_PASSWORD: $KALABOX_APP_NODE_CONFIG_FRAMEWORK
     MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    MYSQL_DATABASE: $KALABOX_APP_PHP_CONFIG_FRAMEWORK
+    MYSQL_DATABASE: $KALABOX_APP_NODE_CONFIG_FRAMEWORK

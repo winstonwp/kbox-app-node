@@ -1,6 +1,6 @@
-site_name: PHP on Kalabox Documentation
+site_name: Node.js on Kalabox Documentation
 theme: readthedocs
-repo_url: https://github.com/kalabox/kalabox-app-php
+repo_url: https://github.com/winstonwp/kalabox-app-node
 include_search: true
 markdown_extensions:
   - markdown.extensions.toc

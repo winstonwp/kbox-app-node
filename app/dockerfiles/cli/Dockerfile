@@ -11,3 +11,5 @@ FROM kalabox/cli:stable
 #
 #   https://docs.docker.com/engine/reference/builder/
 #
+
+# checked

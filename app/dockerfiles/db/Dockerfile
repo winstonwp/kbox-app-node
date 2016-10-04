@@ -11,3 +11,5 @@ FROM mariadb:5.5
 #
 #   https://docs.docker.com/engine/reference/builder/
 #
+
+# checked, but don't know it I should use it
