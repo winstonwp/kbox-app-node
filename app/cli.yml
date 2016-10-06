@@ -54,7 +54,7 @@
 git:
   service: cli
   description: Run a git command on your codebase
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #
 # Adds a rsync command to your Pantheon app.
@@ -74,7 +74,7 @@ rsync:
 node:
   service: cli
   description: Run a node command
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #
 # Adds a npm command to your pantheon app.
@@ -84,7 +84,7 @@ node:
 npm:
   service: cli
   description: Run a npm command
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #
 # Adds a grunt command to your pantheon app.
@@ -94,7 +94,7 @@ npm:
 grunt:
   service: cli
   description: Run a grunt command
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #
 # Adds a gulp command to your pantheon app.
@@ -104,7 +104,7 @@ grunt:
 gulp:
   service: cli
   description: Run a gulp command
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #
 # Adds a bower command to your pantheon app.
@@ -114,6 +114,6 @@ gulp:
 bower:
   service: cli
   description: Run a bower command
-  mapping: <config.sharing.codeDir>:/home/app
+  mapping: <config.sharing.codeDir>:/home/aps
 
 #checked

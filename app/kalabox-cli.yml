@@ -25,7 +25,7 @@ cli:
   volumes_from:
     - data
   environment:
-    WEBROOT: /home/app
+    WEBROOT: /home/aps
     TERM: xterm-color
     KALABOX_UID: $KALABOX_ENGINE_ID
     KALABOX_GID: $KALABOX_ENGINE_GID

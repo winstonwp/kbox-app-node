@@ -12,7 +12,7 @@
     "url": "https://github.com/winstonwp/kalabox-app-node.git"
   },
   "bugs": {
-    "url": "https://github.com/winstonwp/kalabox-app-node",
+    "url": "https://github.com/winstonwp/kalabox-app-node"
   },
   "dependencies": {
     "lodash": "^3.7.0"

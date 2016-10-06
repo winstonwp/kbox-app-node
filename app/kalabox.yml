@@ -88,7 +88,7 @@ pluginconfig:
   #     Generally you will not want to share massive amounts of static assets.
   #
   sharing:
-    share: data:/home/app
+    share: data:/home/aps
 
   #
   # services plugin config.

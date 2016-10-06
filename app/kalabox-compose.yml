@@ -32,7 +32,7 @@
 #
 #   3. /var/lib/mysql - MariaDB databases to preserve data on rebuilds
 #
-#   4. /home/app - Your applications codebase, also where you shared code lives
+#   4. /home/aps - Your applications codebase, also where you shared code lives
 #
 data:
 
@@ -43,12 +43,12 @@ data:
   # Uncomment this and comment 'image' above if you want to edit your
   # local dockerfile and build from there. This is useful for development
   #
-  # build: ./dockerfiles/data
+  build: ./dockerfiles/data
 
   volumes:
     - /var/lib/mysql
-    - /home/app
-    - $KALABOX_APP_ROOT_BIND/files:/home/app/$KALABOX_APP_NODE_CONFIG_FILEMOUNT
+    - /home/aps
+    - $KALABOX_APP_ROOT_BIND/files:$KALABOX_APP_NODE_CONFIG_FILEMOUNT
 
 #
 # This defines a basic Drupal appserver.
@@ -61,16 +61,15 @@ appserver:
 
   # Comment this and uncomment 'build' below if you want to edit your
   # local dockerfile and build from there. This is useful for development
-  image: $KALABOX_APP_NODE_CONFIG_IMAGE
+  # image: $KALABOX_APP_NODE_CONFIG_IMAGE
 
   # Uncomment this and comment 'image' above if you want to edit your
   # local dockerfile and build from there. This is useful for development
   #
-  # build: ./dockerfiles/${KALABOX_APP_NODE_CONFIG_FRAMEWORK}${KALABOX_APP_NODE_CONFIG_VERSION}
+  build: ./dockerfiles/${KALABOX_APP_NODE_CONFIG_FRAMEWORK}${KALABOX_APP_NODE_CONFIG_VERSION}
 
   hostname: $KALABOX_APP_CONFIG_NAME.$KALABOX_APP_CONFIG_DOMAIN
-  volumes:
-    - $KALABOX_APP_ROOT_BIND/config/apache/apache2-foreground:/usr/local/bin/apache2-foreground
+
   environment:
     FRAMEWORK: $KALABOX_APP_NODE_CONFIG_FRAMEWORK
     KALABOX_UID: $KALABOX_ENGINE_ID
