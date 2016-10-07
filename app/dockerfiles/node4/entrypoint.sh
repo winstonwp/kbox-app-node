@@ -15,7 +15,7 @@ else
   echo "$DIR/node_modules is not empty"
 fi
 
-chown -Rf 1000:50 $DIR
+chown -Rf 1000:1000 $DIR
 
 node "$DIR/index.js"
 
