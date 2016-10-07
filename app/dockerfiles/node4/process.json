@@ -1,8 +1,0 @@
-{
-  "apps" : [{
-    "exec_interpreter"   : "node",
-    "log_date_format"    : "YYYY-MM-DD HH:mm Z",
-    "name"               : "nodeapp",
-    "script"             : "/home/aps/index.js"
-  }]
-}

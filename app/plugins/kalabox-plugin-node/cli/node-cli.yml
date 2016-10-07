@@ -9,4 +9,4 @@ mysql:
   precmdopts: -uroot
   entrypoint: mysql
   description: Drop into a mysql shell
-  mapping: <config.sharing.codeDir>:/home/aps
+  mapping: <config.sharing.codeDir>:/var/www/html

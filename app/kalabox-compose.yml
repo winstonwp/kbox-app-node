@@ -32,7 +32,7 @@
 #
 #   3. /var/lib/mysql - MariaDB databases to preserve data on rebuilds
 #
-#   4. /home/aps - Your applications codebase, also where you shared code lives
+#   4. /var/www/html - Your applications codebase, also where you shared code lives
 #
 data:
 
@@ -43,11 +43,12 @@ data:
   # Uncomment this and comment 'image' above if you want to edit your
   # local dockerfile and build from there. This is useful for development
   #
-  build: ./dockerfiles/data
+  #build: ./dockerfiles/data
 
   volumes:
     - /var/lib/mysql
-    - /home/aps
+    - /var/www/html
+    #/home/winstonwp/.kalabox/apps/hhh:/home/aps
     - $KALABOX_APP_ROOT_BIND/files:$KALABOX_APP_NODE_CONFIG_FILEMOUNT
 
 #
