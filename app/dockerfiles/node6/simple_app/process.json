@@ -1,0 +1,23 @@
+{
+  "name"             : "node-app",
+  "cwd"              : "/var/www/html/",
+  "args"             : [],
+  "script"           : "app.js",
+  "node_args"        : [],
+  "log_date_format"  : "YYYY-MM-DD HH:mm Z",
+  "error_file"       : "/nodelogs/node-app.stderr.log",
+  "out_file"         : "/nodelogs/node-app.stdout.log",
+  "instances"        : 1,
+  "min_uptime"       : "200s",
+  "max_restarts"     : 20,
+  "watch"            : true,
+  "ignore_watch"      : ["[\\/\\\\]\\./", "node_modules"],
+  "merge_logs"       : true,
+  "exec_interpreter" : "node",
+  "exec_mode"        : "fork",
+  "autorestart"      : false,
+  "env": {
+    "NODE_ENV": "development",
+    "AWESOME_SERVICE_API_TOKEN": "xxx"
+  }
+}

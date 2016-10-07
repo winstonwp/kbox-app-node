@@ -1,8 +1,13 @@
 FROM node:6
-RUN npm update -g npm && npm install -g pm2
-RUN apt-get update
-RUN apt-get install git
-RUN git clone https://github.com/winstonwp/helloworld-express.git
-RUN cd helloworld-express/ && npm install
 
-CMD node helloworld-express/index.js
+VOLUME /var/www/html
+
+RUN npm install -g --quiet pm2
+
+COPY ./entrypoint.sh /
+COPY ./simple_app/app.js /app.js
+COPY ./simple_app/process.json /process.json
+
+WORKDIR /var/www/html/
+
+ENTRYPOINT ["/entrypoint.sh"]
