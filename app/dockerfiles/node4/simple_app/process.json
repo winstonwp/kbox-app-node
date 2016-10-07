@@ -1,6 +1,6 @@
 {
   "name"             : "node-app",
-  "cwd"              : "/src/",
+  "cwd"              : "/var/www/html/",
   "args"             : [],
   "script"           : "app.js",
   "node_args"        : [],

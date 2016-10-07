@@ -9,6 +9,6 @@ fi
 
 chown -Rf 1000:1000 $DIR
 
-node "$DIR/app.js"
+pm2-docker "$DIR/process.json"
 
 exec "$@"
